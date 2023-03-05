@@ -1,0 +1,24 @@
+<div *ngIf="selectedProduct">
+    <p>{{ selectedProduct.name }}</p>
+</div>
+
+<div *ngIf="products.length !== 0; else noProduct" class="flex">
+    <ng-template [ngTemplateOutlet]="productList"></ng-template>
+</div>
+
+<ng-template #productList>
+    <div class="row" >
+        <div class="card col-3 p-3 m-3" *ngFor="let product of products" (click)="handleClickProduct(product)" style="cursor: pointer;" routerLink="/products/{{product.id}}">
+            <img src="../../assets/images/{{ product.imageUrl }}" alt="" class="img-fluid rounded-start">
+            <div class="card-body">
+                <h5 class="card-title">{{product.name}}</h5>
+                <p class="card-text">{{product.description}}</p>
+            </div>                
+        </div>        
+    </div>   
+</ng-template>
+
+<ng-template #noProduct>
+    <div class="alert alert-warning"> ürün yok</div>
+</ng-template>
+
