@@ -1,0 +1,39 @@
+<p>Create New Product</p>
+<form #form="ngForm" (ngSubmit)="createProduct()">
+    <div class="alert alert-danger" *ngIf="error">{{error}}</div>
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input [(ngModel)]="model.name" #name="ngModel" type="text" name="name" id="name" class="form-control" required minlength="2">
+        <div class="text-danger mt-1" *ngIf="name.invalid && name.touched">The product name must be at least 2 characters!</div>
+    </div>
+    <div class="mb-3">
+        <label for="name" class="form-label">Price</label>
+        <input [(ngModel)]="model.price" #price="ngModel" type="text" name="price" id="price" class="form-control" required min="0" max="999999">
+        <div class="text-danger mt-1" *ngIf="price.invalid && price.touched">Please enter a product price!</div>
+    </div>
+    <div class="mb-3">
+        <label for="name" class="form-label">İmageURL</label>
+        <input [(ngModel)]="model.imageUrl" #İmageURL="ngModel" type="text" name="imageUrl" id="imageUrl" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label for="name" class="form-label">Title</label>
+        <input [(ngModel)]="model.title" type="text" name="title" id="title" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label for="name" class="form-label">Decription</label>
+        <ckeditor [(ngModel)]="model.description" name="description" id="description"></ckeditor>
+    </div>
+    <div class="mb-3 form-check">
+        <input [(ngModel)]="model.isInStock" type="text" name="isInStock" id="isActive" type="checkbox" class="form-check-input">
+        <label class="form-check-label">Is in Stock?</label>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="categoryId">Category</label>
+        <select [(ngModel)]="model.categoryId" name="categoryId" id="categoryId" class="form-select">
+            <option value="0">Category</option>
+            <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
+
+        </select>
+    </div>
+    <button class="btn btn-primary" type="submit" [disabled]="form.invalid">Save</button>
+</form>
