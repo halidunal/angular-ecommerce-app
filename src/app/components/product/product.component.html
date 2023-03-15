@@ -1,17 +1,29 @@
-<div class="card p-3 m-3" *ngIf="product">
-    <div class="row">
-        <div class="col-3">
-            <img src="../../../assets/images/{{product.imageUrl}}" alt="" class="img-fluid rounded-start">
+<div *ngIf="!loading">
+    <div class="card p-3 m-3" *ngIf="product">
+        <div class="row">
+            <div class="col-3">
+                <img src="../../../assets/images/{{product.imageUrl}}" alt="" class="img-fluid rounded-start">
+            </div>
+            <div class="col-9">
+                <div class="card-body">
+                    <h3 class="card-title">{{product.name}}</h3>
+                    <h5 class="card-text">{{product.title}}</h5>
+                    <p class="card-text">Fiyat: {{product.price}}</p>
+                </div>
+            </div>
         </div>
-        <div class="col-9">
-            <div class="card-body">
-                <h5 class="card-title">{{product.name}}</h5>
-                <p class="card-text">{{product.description}}</p>
+        <div class="row m-3">
+            <div class="col-12">
+                <p class="card-text" [innerHTML]="product.description"></p>
             </div>
         </div>
     </div>
+
+    <ng-template #noProduct>
+        <div class="alert alert-warning">Ürün bilgilerine erişilemedi</div>
+    </ng-template>
 </div>
 
-<ng-template #noProduct>
-    <div class="alert alert-warning">Ürün bilgilerine erişilemedi</div>
-</ng-template>
+<div *ngIf="loading" class="spinner-border text-primary d-flex justify-contet-center alight-items-center" role="status">
+    <span class="visually-hidden">Loading...</span>
+</div>
