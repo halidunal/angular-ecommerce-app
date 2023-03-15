@@ -7,7 +7,11 @@ import { ProductListComponent } from './components/product-list/product-list.com
 import { ProductComponent } from './components/product/product.component';
 import { CategoryListComponent } from './components/category-list/category-list.component';
 import { HomeComponent } from './components/home/home.component';
-
+import { HttpClientModule } from '@angular/common/http';
+import { NewProductComponent } from './components/new-product/new-product.component';
+import { NewCategoryComponent } from './components/new-category/new-category.component'
+import { FormsModule } from '@angular/forms';
+import { CKEditorModule } from 'ckeditor4-angular';
 
 @NgModule({
   declarations: [
@@ -16,11 +20,16 @@ import { HomeComponent } from './components/home/home.component';
     ProductListComponent,
     ProductComponent,
     CategoryListComponent,
-    HomeComponent
+    HomeComponent,
+    NewProductComponent,
+    NewCategoryComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    CKEditorModule
   ],
   providers: [],
   bootstrap: [AppComponent]
