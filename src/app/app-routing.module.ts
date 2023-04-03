@@ -5,6 +5,7 @@ import { NewCategoryComponent } from './components/new-category/new-category.com
 import { NewProductComponent } from './components/new-product/new-product.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { ProductComponent } from './components/product/product.component';
+import { AuthComponent } from './components/auth/auth.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -13,6 +14,7 @@ const routes: Routes = [
   {path: 'categories/new', component: NewCategoryComponent},
   {path: 'products/:productId', component: ProductComponent},
   {path: 'products/categories/:categoryId', component: ProductListComponent},
+  {path: 'auth', component: AuthComponent},
 ];
 
 @NgModule({
