@@ -19,8 +19,8 @@ export class NewProductComponent implements OnInit {
   constructor(private productService: ProductService, private rooter: Router, private categoryService: CategoryService) { }
 
   ngOnInit(): void {
-    this.categoryService.getCategories().subscribe(result =>{
-      this.categories = result;
+    this.categoryService.getCategories().subscribe(response =>{
+      this.categories = response;
     })
   }
 

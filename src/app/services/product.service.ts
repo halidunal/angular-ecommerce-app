@@ -14,16 +14,16 @@ export class ProductService {
     getProducts(categoryId: number): Observable<Product[]> {
         return this.http
             .get<Product[]>(this.url + "products.json")
-            .pipe(map(result => {
+            .pipe(map(response => {
                 const products: Product[] = [];
 
-                for(let key in result) {
+                for(let key in response) {
                     if(categoryId){
-                        if(categoryId == result[key].categoryId){
-                            products.push({...result[key], id: key})
+                        if(categoryId == response[key].categoryId){
+                            products.push({...response[key], id: key})
                         }
                     }else{
-                        products.push({...result[key], id: key})
+                        products.push({...response[key], id: key})
                     }
                 }
                 return products;

@@ -16,7 +16,7 @@ export class NewCategoryComponent implements OnInit {
   }
 
   createCategory(name: any){
-    this.categoryService.createCategory({name: name.value}).subscribe(result => {
+    this.categoryService.createCategory({name: name.value}).subscribe(response => {
       this.router.navigate(["/products"])
     })
   }

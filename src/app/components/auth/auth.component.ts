@@ -13,6 +13,7 @@ export class AuthComponent implements OnInit {
 
   isLogin: boolean = true;
   loading: boolean = false;
+  error: string = "";
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
@@ -20,6 +21,7 @@ export class AuthComponent implements OnInit {
 
   toggle() {
     this.isLogin = !this.isLogin;
+    if(!this.isLogin) this.error = "";
   }
 
   handleAuth(form: NgForm) {
@@ -33,9 +35,15 @@ export class AuthComponent implements OnInit {
     }else{
       authResponse = this.authService.signUp(email, password)
     }
-    authResponse.subscribe(response => {
-      this.loading = false;
-      console.log(response)
+    authResponse.subscribe({
+      next: (response) => {
+        this.loading = false;
+        this.error = "";
+      },
+      error: (error) => {
+        this.error = error
+        this.loading = false;
+      }
     })
   }
 

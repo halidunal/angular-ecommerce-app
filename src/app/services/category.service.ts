@@ -12,10 +12,10 @@ export class CategoryService {
   getCategories(): Observable<Category[]>{
     return this.http
       .get<Category[]>(this.url + "categories.json")
-      .pipe(map(result => {
+      .pipe(map(response => {
         const categories: Category[] = [];
-        for(let key in result){
-          categories.push({...result[key], id: key})
+        for(let key in response){
+          categories.push({...response[key], id: key})
         }
         return categories
       }))

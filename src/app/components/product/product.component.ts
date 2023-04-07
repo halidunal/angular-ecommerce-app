@@ -21,8 +21,8 @@ export class ProductComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.loading = true;
       const id = params['productId'];
-      this.productServices.getProductById(id).subscribe(result => {
-        this.product = {...result, id: id}
+      this.productServices.getProductById(id).subscribe(response => {
+        this.product = {...response, id: id}
         this.loading = false;
       })
     })
