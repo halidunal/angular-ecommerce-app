@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthSingUpRegister } from '../models/auth';
-import { catchError, tap, throwError } from 'rxjs';
+import { Subject, catchError, tap, throwError } from 'rxjs';
 import { User } from '../models/user';
 
 @Injectable({
@@ -11,6 +11,7 @@ export class AuthService {
   apiKey: string = "AIzaSyCwyyty3E_ThfSoiwXdoX8BnQVgg5XIw_Q";
   registerUrl: string = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" + this.apiKey;
   singUpUrl: string = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + this.apiKey;
+  user = new Subject<User>();
   constructor(private http: HttpClient) { }
 
   signUp(email: string, password: string){
@@ -19,6 +20,7 @@ export class AuthService {
       tap(response => {
         let expirationDate = new Date(new Date().getTime() + (+response.expiresIn*1000))
         let user = new User(response.email, response.localId, response.idToken, expirationDate)
+        this.user.next(user)
       }),
       catchError(this.handleError)
     )
@@ -27,6 +29,11 @@ export class AuthService {
   singIn(email: string, password: string){
     return this.http.post<AuthSingUpRegister>(this.singUpUrl, {email, password, returnSecureToken: true})
     .pipe(
+      tap(response => {
+        let expirationDate = new Date(new Date().getTime() + (+response.expiresIn*1000))
+        let user = new User(response.email, response.localId, response.idToken, expirationDate)
+        this.user.next(user)
+      }),
       catchError(this.handleError)
     )
   }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthSingUpRegister } from 'src/app/models/auth';
 import { AuthService } from 'src/app/services/auth.service';
@@ -14,7 +15,7 @@ export class AuthComponent implements OnInit {
   isLogin: boolean = true;
   loading: boolean = false;
   error: string = "";
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -39,6 +40,7 @@ export class AuthComponent implements OnInit {
       next: (response) => {
         this.loading = false;
         this.error = "";
+        this.router.navigate(["/"]);
       },
       error: (error) => {
         this.error = error
