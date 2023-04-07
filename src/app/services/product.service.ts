@@ -1,13 +1,14 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, map, delay } from "rxjs";
+import { Observable, map, delay, take, exhaustMap } from "rxjs";
 import { Product } from "../models/product";
+import { AuthService } from "./auth.service";
 
 @Injectable()
 export class ProductService {
     private url = "https://ng-ecommerce-app-default-rtdb.europe-west1.firebasedatabase.app/";
 
-    constructor(private http: HttpClient) {
+    constructor(private authService: AuthService, private http: HttpClient) {
 
     }
 
@@ -35,6 +36,12 @@ export class ProductService {
     }
 
     createProduct(product: Product): Observable<Product>{
-        return this.http.post<Product>(this.url + "products.json", product);
+        return this.authService.user.pipe(
+            take(1),
+            exhaustMap(user => {
+                //firabase write rule: ".write": "auth != null"
+                return this.http.post<Product>(this.url + "products.json?auth=" + user?.token, product);
+            })
+        )
     }
 }
