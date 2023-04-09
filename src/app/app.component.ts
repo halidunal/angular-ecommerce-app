@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from './services/product.service';
-import { AuthService } from './services/auth.service';
+import { AuthenticationService } from './services/authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -10,9 +10,9 @@ import { AuthService } from './services/auth.service';
   providers: [ProductService]
 })
 export class AppComponent implements OnInit{
-  constructor(private authService: AuthService) {}
+  constructor(private authenticationService: AuthenticationService) {}
 
   ngOnInit(): void {
-    this.authService.refreshLogin();
+    this.authenticationService.refreshLogin();
   }
 }

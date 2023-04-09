@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'navbar',
@@ -10,10 +10,10 @@ export class NavbarComponent implements OnInit {
 
   isAuth: boolean = false;
   // isAdmin: boolean = false;
-  constructor(private authService: AuthService) { }
+  constructor(private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
-    this.authService.user.subscribe(user => {
+    this.authenticationService.user.subscribe(user => {
       this.isAuth = !!user
     })
     // this.authorizationService.user.subscribe(user => {
@@ -22,6 +22,6 @@ export class NavbarComponent implements OnInit {
   }
 
   signOut() {
-    this.authService.singOut();
+    this.authenticationService.singOut();
   }
 }

@@ -1,6 +1,6 @@
 <div class="navbar navbar-expand-lg bd-navbar sticky-top navbar-dark bg-primary">
     <nav class="container-xxl bd-gutter flex-wrap flex-lg-nowrap">
-        <a routerLink="/" class="navbar-brand">Shop App</a>
+        <a routerLink="/" class="navbar-brand">Ng Shop App</a>
         <div class="bd-navbar-toggle">
             <button class="navbar-toggler p-2" data-bs-toggle="collapse" data-bs-target="#collapse">
                 <span class="navbar-toggler-icon"></span>
@@ -24,11 +24,9 @@
             </ul>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li *ngIf="!isAuth" class="nav-item">
-                    <a routerLink="/auth" class="nav-link">Login</a>
+                    <a routerLink="/auth" class="nav-link">Login/Register</a>
                 </li>
-                <li *ngIf="!isAuth" class="nav-item">
-                    <a routerLink="/auth" class="nav-link">Register</a>
-                </li>
+
                 <li *ngIf="isAuth" class="nav-item">
                     <a (click)="signOut()" routerLink="/auth" class="nav-link">Logout</a>
                 </li>

@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, exhaustMap, map, take } from 'rxjs';
 import { Category } from '../models/category';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable()
 export class CategoryService {
   private url = "https://ng-ecommerce-app-default-rtdb.europe-west1.firebasedatabase.app/";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authenticationService: AuthenticationService) { }
 
   getCategories(): Observable<Category[]>{
     return this.http
@@ -22,7 +23,12 @@ export class CategoryService {
   }
 
   createCategory(category: Category): Observable<Category>{
-    return this.http.post<Category>(this.url + "/categories.json", category)
+    return this.authenticationService.user.pipe(
+      take(1),
+      exhaustMap(user => {
+        //firabase write rule: ".write": "auth != null"
+        return this.http.post<Category>(this.url + "/categories.json?auth=" + user?.token, category)  
+      })
+    )
   }
-
 }

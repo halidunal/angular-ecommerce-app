@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthSingUpRegister } from 'src/app/models/auth';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthSingInRegister } from 'src/app/models/auth';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'auth',
@@ -15,7 +15,7 @@ export class AuthComponent implements OnInit {
   isLogin: boolean = true;
   loading: boolean = false;
   error: string = "";
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authenticationService: AuthenticationService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -30,11 +30,11 @@ export class AuthComponent implements OnInit {
     this.loading = true;
     const email = form.value.email;
     const password = form.value.password;
-    var authResponse: Observable<AuthSingUpRegister>;
+    var authResponse: Observable<AuthSingInRegister>;
     if(this.isLogin){
-      authResponse = this.authService.singIn(email, password)
+      authResponse = this.authenticationService.singIn(email, password)
     }else{
-      authResponse = this.authService.signUp(email, password)
+      authResponse = this.authenticationService.signUp(email, password)
     }
     authResponse.subscribe({
       next: (response) => {

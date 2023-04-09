@@ -1,4 +1,4 @@
-export interface AuthSingUpRegister {
+export interface AuthSingInRegister {
     idToken: string,
     email: string,
     refreshToken: string,

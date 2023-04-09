@@ -13,6 +13,7 @@ import { NewCategoryComponent } from './components/new-category/new-category.com
 import { FormsModule } from '@angular/forms';
 import { CKEditorModule } from 'ckeditor4-angular';
 import { AuthComponent } from './components/auth/auth.component';
+import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { AuthComponent } from './components/auth/auth.component';
     HomeComponent,
     NewProductComponent,
     NewCategoryComponent,
-    AuthComponent
+    AuthComponent,
+    UnauthorizedComponent
   ],
   imports: [
     BrowserModule,

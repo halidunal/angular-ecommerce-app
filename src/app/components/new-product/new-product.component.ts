@@ -27,17 +27,17 @@ export class NewProductComponent implements OnInit {
   createProduct(){
     // name: any, price: any, description: any, imageUrl: any, isInStock: any, categoryId: any
     // if(name.value == "" || name.value.length < 2){
-    //   this.error = "Ürün ismi 2 karakterden az olamaz!";
+    //   this.error = "error";
     //   return;
     // }
 
     // if(price.value == ""){
-    //   this.error = "Ürünün fiyat bilgisini giriniz!";
+    //   this.error = "error";
     //   return;
     // }
 
     if(this.model.categoryId == "0"){
-      this.error = "Ürün kategorisini seçiniz!";
+      this.error = "Please select a chategory";
       return;
     }
 

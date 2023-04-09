@@ -1,34 +1,37 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AuthSingUpRegister } from '../models/auth';
-import { BehaviorSubject, Subject, catchError, tap, throwError } from 'rxjs';
+import { AuthSingInRegister } from '../models/auth';
+import { BehaviorSubject, Observable, catchError, tap, throwError } from 'rxjs';
 import { User } from '../models/user';
+import { UserRole } from '../models/user-role';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class AuthenticationService {
   apiKey: string = "AIzaSyCwyyty3E_ThfSoiwXdoX8BnQVgg5XIw_Q";
+  url: string = "https://ng-ecommerce-app-default-rtdb.europe-west1.firebasedatabase.app/";
   registerUrl: string = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" + this.apiKey;
   singUpUrl: string = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + this.apiKey;
   user = new BehaviorSubject<User | null>(null);
+  isAdmin = false;
   constructor(private http: HttpClient) { }
 
   signUp(email: string, password: string){
-    return this.http.post<AuthSingUpRegister>(this.registerUrl, {email, password, returnSecureToken: true})
+    return this.http.post<AuthSingInRegister>(this.registerUrl, {email, password, returnSecureToken: true})
     .pipe(
       tap(response => {
-        this.handleUser(response.email, response.localId, response.idToken, response.expiresIn)
+        this.handleUser(response.email, response.localId, response.idToken, response.expiresIn, true)
       }),
       catchError(this.handleError)
     )
   }
 
   singIn(email: string, password: string){
-    return this.http.post<AuthSingUpRegister>(this.singUpUrl, {email, password, returnSecureToken: true})
+    return this.http.post<AuthSingInRegister>(this.singUpUrl, {email, password, returnSecureToken: true})
     .pipe(
       tap(response => {
-        this.handleUser(response.email, response.localId, response.idToken, response.expiresIn)
+        this.handleUser(response.email, response.localId, response.idToken, response.expiresIn, false)
       }),
       catchError(this.handleError)
     )
@@ -47,11 +50,22 @@ export class AuthService {
     if(savedUser.token) this.user.next(savedUser)
   }
 
-  private handleUser(email: string, localId: string, idToken: string, expiresIn: string){
+  private createUserRole(userRole: UserRole, user: User): Observable<UserRole>{
+    return this.http.post<UserRole>(this.url + "/userRoles.json?auth=" + user?.token, userRole)  
+  }
+
+  private userRole(localId: string){
+    this.http.get<any>(this.url + "userRoles.json").subscribe(response => {
+    })
+  }
+
+  private handleUser(email: string, localId: string, idToken: string, expiresIn: string, registered: boolean){
     let expirationDate = new Date(new Date().getTime() + (+expiresIn*1000));
     let user = new User(email, localId, idToken, expirationDate);
     this.user.next(user);
     localStorage.setItem("user", JSON.stringify(user));
+    registered && this.createUserRole({email, roleId: 1, userId: localId}, user).subscribe(response => {});
+    this.userRole(localId);
   }
 
   private handleError(error: HttpErrorResponse) {
