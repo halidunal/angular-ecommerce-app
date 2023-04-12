@@ -1,3 +1,14 @@
 .img-fluid{
     max-width: 220px;
 }
+
+.card {
+    cursor: pointer;
+    width: 250px;
+    transition: all .3s;
+}
+
+.card:hover{
+    scale: 1.02;
+    box-shadow: 0px 0px 10px -1px #c0c0c0;
+}

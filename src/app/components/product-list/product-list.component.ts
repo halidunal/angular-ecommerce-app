@@ -15,6 +15,8 @@ export class ProductListComponent implements OnInit {
   products: Product[] = [];
   selectedProduct: Product | null;
   loading: boolean = false;
+  selectedCategory: string | undefined = "";
+
   constructor(private route: ActivatedRoute, private productService: ProductService) { 
   }
 
@@ -27,6 +29,9 @@ export class ProductListComponent implements OnInit {
       })
     })
   }
+
+  // this.selectedCategory = document.getElementsByClassName("active")[0].innerHTML
+
 
   handleClickProduct(product: Product){
     this.selectedProduct = product;

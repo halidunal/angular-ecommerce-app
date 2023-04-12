@@ -1,19 +1,19 @@
- <div *ngIf="!loading">
-    <div *ngIf="selectedProduct">
-        <p>{{ selectedProduct.name }}</p>
+<div *ngIf="!loading">
+    <div>     
+        <p><a routerLink="/" class="nav-link d-inline">Home</a> > {{selectedCategory}}</p>
     </div>
-
     <div *ngIf="products.length !== 0; else noProduct" class="flex">
         <ng-template [ngTemplateOutlet]="productList"></ng-template>
     </div>
 
     <ng-template #productList>
-        <div class="row" >
-            <div class="card col-3 p-3 m-3" *ngFor="let product of products" (click)="handleClickProduct(product)" style="cursor: pointer;" routerLink="/products/{{product.id}}">
+        <div class="row d-flex gap-3" style="flex-wrap: wrap;">
+            <div class="card col-3 p-3" *ngFor="let product of products" (click)="handleClickProduct(product)" routerLink="/products/{{product.id}}">
                 <img src="../../assets/images/{{ product.imageUrl }}" alt="" class="img-fluid rounded-start">
                 <div class="card-body">
-                    <h5 class="card-title">{{product.name}}</h5>
+                    <h5 class="card-title"><b>{{product.name}}</b></h5>
                     <p class="card-text">{{product.title}}</p>
+                    <b class="card-text">{{product.price}}$</b>
                 </div>                
             </div>        
         </div>   
@@ -23,7 +23,10 @@
         <div class="alert alert-warning">There are no products in this category</div>
     </ng-template>
 </div>
-
-<div *ngIf="loading" class="spinner-border text-primary d-flex justify-contet-center alight-items-center" role="status">
-    <span class="visually-hidden">Loading...</span>
+<div *ngIf="loading" class="d-flex justify-content-center w-100" style="height: calc(100vh - 88px); align-items: center;">
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>          
 </div>
+
+
